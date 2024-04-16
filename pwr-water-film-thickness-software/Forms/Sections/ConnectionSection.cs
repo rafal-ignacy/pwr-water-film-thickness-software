@@ -41,7 +41,7 @@ namespace pwr_water_film_thickness_software
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + " - cannot disconnect to spectrometer");
+                    MessageBox.Show(ex.Message + " - cannot disconnect spectrometer");
                     return;
                 }
                 spectrometerConnectionLabel.Text = "Spectrometer not connected";
@@ -51,7 +51,49 @@ namespace pwr_water_film_thickness_software
 
         private void labJackConnectionButton_Click(object sender, System.EventArgs e)
         {
+            labJackConnectionLabel.Enabled = false;
+            labJackConnectionButton.Enabled = false;
+            
+            if (!labJackHandler.IsConnected)
+            {
+                int labJacksAmount = 0;
+                try
+                {
+                    labJacksAmount = labJackHandler.Connect(serialNumber, deviceCode, highLimit);
+                    labJackHandler.Home();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + " - cannot connect to lab jack");
+                    return;
+                }
+                if (labJacksAmount != 0)
+                {
+                    labJackConnectionLabel.Text = "Lab jack connected";
+                    labJackConnectionButton.Text = "Disconnect";
+                }
+                else
+                {
+                    MessageBox.Show("No spectrometer is connected");
+                }
+            }
+            else
+            {
+                try
+                {
+                    labJackHandler.Disconnect();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + " - cannot disconnect lab jack");
+                    return;
+                }
+                labJackConnectionLabel.Text = "Lab jack not connected";
+                labJackConnectionButton.Text = "Connect";
+            }
 
+            labJackConnectionLabel.Enabled = true;
+            labJackConnectionButton.Enabled = true;
         }
     }
 }
