@@ -7,8 +7,6 @@ namespace pwr_water_film_thickness_software
     {
         public MainForm()
         {
-            SpectrometerHandler spectrometerHandler = new SpectrometerHandler();
-            spectrometerHandler.Connect();
             InitializeComponent();
         }
     }

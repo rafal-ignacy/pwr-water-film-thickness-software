@@ -75,5 +75,9 @@ namespace pwr_water_film_thickness_software.Mocks
             return spectrum;
         }
         public double GetWaveLength(int spectrometerIndex, int pixelIndex) => waveLengths[pixelIndex];
+        public void Disconnect()
+        {
+            isConnected = false;
+        }
     }
 }

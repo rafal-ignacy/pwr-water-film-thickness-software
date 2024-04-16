@@ -80,5 +80,20 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             }
             return waveLength;
         }
+        public void Disconnect()
+        {
+            try
+            {
+                device.closeAllSpectrometers();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message + " - error during spectrometer disconnection");
+            }
+            finally
+            {
+                isConnected = false;
+            }
+        }
     }
 }

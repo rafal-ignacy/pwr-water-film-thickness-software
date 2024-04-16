@@ -65,17 +65,26 @@
     <Compile Include="Base Objects\SpectrometerBase.cs" />
     <Compile Include="Data Models\SpectrumRow.cs" />
     <Compile Include="Device Handlers\SpectrometerHandler.cs" />
+    <Compile Include="Forms\Declarations\DataDeclarations.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Sections\ConnectionSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Interfaces\ISpectrometer.cs" />
     <Compile Include="Mocks\SpectrometerHandlerMock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
