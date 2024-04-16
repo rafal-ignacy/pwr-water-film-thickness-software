@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Base Objects\SpectrometerBase.cs" />
     <Compile Include="Data Models\SpectrumRow.cs" />
+    <Compile Include="Device Handlers\LabJackHandler.cs" />
     <Compile Include="Device Handlers\SpectrometerHandler.cs" />
     <Compile Include="Forms\Declarations\DataDeclarations.cs">
       <SubType>Form</SubType>
@@ -77,8 +78,12 @@
     <Compile Include="Forms\Sections\ConnectionSection.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Sections\StepMovementSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Interfaces\ISpectrometer.cs" />
+    <Compile Include="Mocks\LabJackHandlerMock.cs" />
     <Compile Include="Mocks\SpectrometerHandlerMock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
