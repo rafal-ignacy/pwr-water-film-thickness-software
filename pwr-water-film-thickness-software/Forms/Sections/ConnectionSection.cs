@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace pwr_water_film_thickness_software
 {
     public partial class MainForm
     {
-        private void spectrometerConnectionButton_Click(object sender, System.EventArgs e)
+        private void spectrometerConnectionButton_Click(object sender, EventArgs e)
         {
             if(!spectrometerHandler.IsConnected)
             {
@@ -23,15 +20,24 @@ namespace pwr_water_film_thickness_software
                     MessageBox.Show(ex.Message + " - cannot connect to spectrometer");
                     return;
                 }
+
                 if (spectrometersAmount != 0)
                 {
                     spectrometerConnectionLabel.Text = "Spectrometer connected";
                     spectrometerConnectionButton.Text = "Disconnect";
+
+                    if (labJackHandler.IsConnected)
+                    {
+                        LabJackSpectrometerConnected();
+                    }
+                    SpectrumChartHandling();
                 }
                 else
                 {
                     MessageBox.Show("No spectrometer is connected");
                 }
+
+                
             }
             else
             {
@@ -46,21 +52,26 @@ namespace pwr_water_film_thickness_software
                 }
                 spectrometerConnectionLabel.Text = "Spectrometer not connected";
                 spectrometerConnectionButton.Text = "Connect";
+
+                StopSpectrumChartHandling();
+                LabJackSpectrometerDisconnected();
             }
         }
 
-        private void labJackConnectionButton_Click(object sender, System.EventArgs e)
-        {
-            labJackConnectionLabel.Enabled = false;
-            labJackConnectionButton.Enabled = false;
-            
+        private void labJackConnectionButton_Click(object sender, EventArgs e)
+        {            
             if (!labJackHandler.IsConnected)
             {
                 int labJacksAmount = 0;
                 try
                 {
                     labJacksAmount = labJackHandler.Connect(serialNumber, deviceCode, highLimit);
+                    LabJackPostionLabelHoming();
                     labJackHandler.Home();
+                    if (labJackPositionBackgroundWorker.IsBusy != true)
+                    {
+                        labJackPositionBackgroundWorker.RunWorkerAsync();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -76,12 +87,23 @@ namespace pwr_water_film_thickness_software
                 {
                     MessageBox.Show("No spectrometer is connected");
                 }
+                LabJackConnected();
+
+                if(spectrometerHandler.IsConnected)
+                {
+                    LabJackSpectrometerConnected();
+                }
             }
             else
             {
                 try
                 {
+                    if (labJackPositionBackgroundWorker.WorkerSupportsCancellation == true)
+                    {
+                        labJackPositionBackgroundWorker.CancelAsync();
+                    }
                     labJackHandler.Disconnect();
+                    LabJackPostionLabelDisconnect();
                 }
                 catch (Exception ex)
                 {
@@ -90,10 +112,9 @@ namespace pwr_water_film_thickness_software
                 }
                 labJackConnectionLabel.Text = "Lab jack not connected";
                 labJackConnectionButton.Text = "Connect";
+                LabJackDisconnected();
+                LabJackSpectrometerDisconnected();
             }
-
-            labJackConnectionLabel.Enabled = true;
-            labJackConnectionButton.Enabled = true;
         }
     }
 }

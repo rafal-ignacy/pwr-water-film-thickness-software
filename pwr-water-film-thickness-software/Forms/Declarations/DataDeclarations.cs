@@ -1,4 +1,5 @@
-﻿using pwr_water_film_thickness_software.DataModels;
+﻿using pwr_water_film_thickness_software.Data_Models;
+using pwr_water_film_thickness_software.DataModels;
 using pwr_water_film_thickness_software.DeviceHandlers;
 using pwr_water_film_thickness_software.Mocks;
 using System;
@@ -15,13 +16,13 @@ namespace pwr_water_film_thickness_software
         private string deviceCode = "L490MZ";
         private int highLimit = 50;
 
-        // private SpectrometerHandler spectrometerHandler = new SpectrometerHandler();
+        //private SpectrometerHandler spectrometerHandler = new SpectrometerHandler();
         private SpectrometerHandlerMock spectrometerHandler = new SpectrometerHandlerMock();
 
-        // private LabJackHandler labJackHandler = new LabJackHandler();
+        //private LabJackHandler labJackHandler = new LabJackHandler();
         private LabJackHandler labJackHandler = new LabJackHandler();
 
-        private List<Tuple<double, List<SpectrumRow>>> spectrumDataMatrix;
+        private List<SpectrumDataMatrixRow> spectrumDataMatrix;
 
     }
 }

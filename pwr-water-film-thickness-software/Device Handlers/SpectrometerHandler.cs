@@ -16,19 +16,9 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         }
         public int Connect()
         {
-            try
-            {
-                device = new NETWrapper();
-                spectrometersAmount = device.openAllSpectrometers();
-                if (spectrometersAmount > 0)
-                {
-                    isConnected = true;
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+            device = new NETWrapper();
+            spectrometersAmount = device.openAllSpectrometers();
+            if (spectrometersAmount > 0) { isConnected = true; }
             return spectrometersAmount;
         }
         public void SetIntegrationTime(int spectrometerIndex, int integrationTime)
@@ -69,16 +59,16 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         }
         public double GetWaveLength(int spectrometerIndex, int pixelIndex)
         {
-            double waveLength;
             try
             {
-                waveLength = device.getWavelength(spectrometerIndex, pixelIndex);
+                double waveLength = device.getWavelength(spectrometerIndex, pixelIndex);
+                return waveLength;
             }
             catch
             {
                 return -1;
             }
-            return waveLength;
+            
         }
         public void Disconnect()
         {

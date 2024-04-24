@@ -13,7 +13,6 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         private string serialNumber;
         private string deviceCode;
         private bool isConnected;
-        private double position;
         private double lowLimit;
         private double highLimit;
         public LabJackHandler()
@@ -32,7 +31,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             get
             {
-                return position;
+                return Math.Round(0.19 * Convert.ToDouble(device.Position), 3);
             }
         }
         public int Connect(string _serialNumber, string _deviceCode, double _highLimit)
@@ -106,7 +105,6 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             {
                 throw new Exception(e.Message + " - error during lab jack homing procedure");
             }
-            position = Convert.ToDouble(device.Position);
         }
         public void SetMoveAbsolutePosition(double position)
         {
@@ -125,7 +123,6 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             try
             {
                 device.MoveAbsolute(waitTimeout);
-                position = Convert.ToDouble(device.Position);
             }
             catch (Exception e)
             {
