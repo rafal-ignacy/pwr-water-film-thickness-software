@@ -15,15 +15,12 @@ namespace pwr_water_film_thickness_software
             absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = false));
             absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = false));
             absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = true));
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.ReadOnly = true));
+
             double absolutePosition = Convert.ToDouble(absolutePositionTextBox.Text, CultureInfo.InvariantCulture);
 
             labJackHandler.SetMoveAbsolutePosition(absolutePosition);
             labJackHandler.MoveAbsolute();
 
-            absolutePositionTextBox.BeginInvoke(new Action(() => absolutePositionTextBox.Clear()));
-
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.ReadOnly = false));
             absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = true));
         }
     }

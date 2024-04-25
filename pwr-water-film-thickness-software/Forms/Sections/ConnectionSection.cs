@@ -14,6 +14,7 @@ namespace pwr_water_film_thickness_software
                 try
                 {
                     spectrometersAmount = spectrometerHandler.Connect();
+                    spectrometerHandler.SetIntegrationTime(0, 6000);
                 }
                 catch(Exception ex)
                 {
@@ -59,61 +60,10 @@ namespace pwr_water_film_thickness_software
         }
 
         private void labJackConnectionButton_Click(object sender, EventArgs e)
-        {            
-            if (!labJackHandler.IsConnected)
+        {
+            if (labJackConnectionBackgroundWorker.IsBusy != true)
             {
-                int labJacksAmount = 0;
-                try
-                {
-                    labJacksAmount = labJackHandler.Connect(serialNumber, deviceCode, highLimit);
-                    LabJackPostionLabelHoming();
-                    labJackHandler.Home();
-                    if (labJackPositionBackgroundWorker.IsBusy != true)
-                    {
-                        labJackPositionBackgroundWorker.RunWorkerAsync();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + " - cannot connect to lab jack");
-                    return;
-                }
-                if (labJacksAmount != 0)
-                {
-                    labJackConnectionLabel.Text = "Lab jack connected";
-                    labJackConnectionButton.Text = "Disconnect";
-                }
-                else
-                {
-                    MessageBox.Show("No spectrometer is connected");
-                }
-                LabJackConnected();
-
-                if(spectrometerHandler.IsConnected)
-                {
-                    LabJackSpectrometerConnected();
-                }
-            }
-            else
-            {
-                try
-                {
-                    if (labJackPositionBackgroundWorker.WorkerSupportsCancellation == true)
-                    {
-                        labJackPositionBackgroundWorker.CancelAsync();
-                    }
-                    labJackHandler.Disconnect();
-                    LabJackPostionLabelDisconnect();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + " - cannot disconnect lab jack");
-                    return;
-                }
-                labJackConnectionLabel.Text = "Lab jack not connected";
-                labJackConnectionButton.Text = "Connect";
-                LabJackDisconnected();
-                LabJackSpectrometerDisconnected();
+                labJackConnectionBackgroundWorker.RunWorkerAsync();
             }
         }
     }

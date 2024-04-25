@@ -56,6 +56,7 @@
             this.absolutePositionBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.labJackPositionBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.calibrationCurveBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.labJackConnectionBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.spectrumChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -302,6 +303,10 @@
             this.calibrationCurveBackgroundWorker.WorkerSupportsCancellation = true;
             this.calibrationCurveBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.calibrationCurveBackgroundWorker_DoWork);
             // 
+            // labJackConnectionBackgroundWorker
+            // 
+            this.labJackConnectionBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.labJackConnectionBackgroundWorker_DoWork);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
@@ -366,6 +371,7 @@
         private System.ComponentModel.BackgroundWorker absolutePositionBackgroundWorker;
         private System.ComponentModel.BackgroundWorker labJackPositionBackgroundWorker;
         private System.ComponentModel.BackgroundWorker calibrationCurveBackgroundWorker;
+        private System.ComponentModel.BackgroundWorker labJackConnectionBackgroundWorker;
     }
 }
 

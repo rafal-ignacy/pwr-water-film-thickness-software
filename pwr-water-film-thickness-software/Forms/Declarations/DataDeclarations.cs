@@ -12,6 +12,7 @@ namespace pwr_water_film_thickness_software
 {
     partial class MainForm
     {
+        //private string serialNumber = "46833131";
         private string serialNumber = "46000001";
         private string deviceCode = "L490MZ";
         private int highLimit = 50;
@@ -20,7 +21,6 @@ namespace pwr_water_film_thickness_software
         private SpectrometerHandlerMock spectrometerHandler = new SpectrometerHandlerMock();
 
         //private LabJackHandler labJackHandler = new LabJackHandler();
-        private LabJackHandler labJackHandler = new LabJackHandler();
 
         private List<SpectrumDataMatrixRow> spectrumDataMatrix;
 

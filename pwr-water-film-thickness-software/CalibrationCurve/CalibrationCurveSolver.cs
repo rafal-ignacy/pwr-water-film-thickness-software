@@ -18,6 +18,7 @@ namespace pwr_water_film_thickness_software.CalibrationCurve
             CalculateAverageValues();
             double aCoefficient = CalculateACoefficient();
             double bCoefficient = CalculateBCoefficient(aCoefficient);
+            Console.WriteLine($"A: {aCoefficient} B: {bCoefficient}");
             return new CalibrationCurveParameters(aCoefficient, bCoefficient);
         }
         private void GetCalibrationCurvePoints(List<SpectrumDataMatrixRow> calibrationSteps)
@@ -28,6 +29,7 @@ namespace pwr_water_film_thickness_software.CalibrationCurve
             {
                 SpectrumRow maxIntensivityRow = calibrationStep.SpectrumData.Find(t => t.SpectrumValues.Average() == calibrationStep.SpectrumData.Max(a => a.SpectrumValues.Average()));
                 calibrationCurvePoints.Add(new CalibrationCurvePoint(calibrationStep.LabJackPosition, maxIntensivityRow.WaveLength));
+                Console.WriteLine($"Position: {calibrationStep.LabJackPosition} Wavelength: {maxIntensivityRow.WaveLength}");
             }
         }
         private void CalculateAverageValues()

@@ -99,7 +99,10 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             int waitTimeout = 900000;
             try
             {
-                device.Home(waitTimeout);
+                if(device.NeedsHoming)
+                {
+                    device.Home(waitTimeout);
+                }  
             }
             catch (Exception e)
             {

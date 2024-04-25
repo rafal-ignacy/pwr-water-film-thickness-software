@@ -38,7 +38,7 @@ namespace pwr_water_film_thickness_software
                 }
                 SpectrumRow maxIntensivityRow = spectrumData.Find(t => t.SpectrumValues.Average() == spectrumData.Max(a => a.SpectrumValues.Average()));
                 this.BeginInvoke(new Action(() => MaxIntensivityWaveLengthUpdate(maxIntensivityRow.SpectrumValues.Average(), maxIntensivityRow.WaveLength)));
-                Thread.Sleep(250);
+                Thread.Sleep(100);
                 spectrumMeasurementBackgroundWorker.ReportProgress(0);
             }
             e.Cancel = true;
