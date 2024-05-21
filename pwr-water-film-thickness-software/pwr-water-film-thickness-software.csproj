@@ -67,6 +67,7 @@
     <Compile Include="CalibrationCurve\CalibrationCurveSolver.cs" />
     <Compile Include="Data Models\CalibrationCurveParameters.cs" />
     <Compile Include="Data Models\CalibrationCurvePoint.cs" />
+    <Compile Include="Data Models\LabJackPositionHistoricalPoint.cs" />
     <Compile Include="Data Models\SpectrumDataMatrixRow.cs" />
     <Compile Include="Data Models\SpectrumRow.cs" />
     <Compile Include="Device Handlers\LabJackHandler.cs" />
@@ -83,6 +84,9 @@
     <Compile Include="Forms\BackgroundWorkers\LabJackPosition.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\BackgroundWorkers\LabJackPositionHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Declarations\DataDeclarations.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,9 +98,6 @@
     </Compile>
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Sections\AbsolutePositionSection.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Sections\ConnectionSection.cs">
       <SubType>Form</SubType>
@@ -114,6 +115,7 @@
     <Compile Include="Interfaces\ISpectrometer.cs" />
     <Compile Include="Mocks\LabJackHandlerMock.cs" />
     <Compile Include="Mocks\SpectrometerHandlerMock.cs" />
+    <Compile Include="Others\FileHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">

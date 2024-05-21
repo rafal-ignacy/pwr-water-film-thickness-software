@@ -14,7 +14,10 @@ namespace pwr_water_film_thickness_software
                 try
                 {
                     spectrometersAmount = spectrometerHandler.Connect();
-                    spectrometerHandler.SetIntegrationTime(0, 6000);
+                    Int32 integrationTime = 4000;
+                    spectrometerHandler.SetIntegrationTime(0, integrationTime);
+                    IntegrationTimeUpdate(integrationTime);
+                    
                 }
                 catch(Exception ex)
                 {
@@ -26,6 +29,7 @@ namespace pwr_water_film_thickness_software
                 {
                     spectrometerConnectionLabel.Text = "Spectrometer connected";
                     spectrometerConnectionButton.Text = "Disconnect";
+                    integrationTimeButton.Enabled = true;
 
                     if (labJackHandler.IsConnected)
                     {
@@ -53,6 +57,8 @@ namespace pwr_water_film_thickness_software
                 }
                 spectrometerConnectionLabel.Text = "Spectrometer not connected";
                 spectrometerConnectionButton.Text = "Connect";
+                integrationTimeButton.Enabled = false;
+                IntegrationTimeDefault();
 
                 StopSpectrumChartHandling();
                 LabJackSpectrometerDisconnected();

@@ -30,7 +30,7 @@ namespace pwr_water_film_thickness_software
 
             while (worker.CancellationPending != true && spectrometerHandler.IsConnected)
             {
-                List<SpectrumRow> spectrumData = spectrometerHandler.GetSpectrumData(5, spectrometerHandler.GetSpectrum, spectrometerHandler.GetWaveLength);
+                List<SpectrumRow> spectrumData = spectrometerHandler.GetSpectrumData(averageSpectrumAmount, spectrometerHandler.GetSpectrum, spectrometerHandler.GetWaveLength);
                 spectrumChart.BeginInvoke(new Action(() => spectrumChart.Series[0].Points.Clear()));
                 foreach (SpectrumRow spectrumRow in spectrumData)
                 {

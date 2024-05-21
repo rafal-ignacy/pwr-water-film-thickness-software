@@ -12,16 +12,10 @@ namespace pwr_water_film_thickness_software
     {
         private void absolutePositionBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = false));
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = false));
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = true));
-
-            double absolutePosition = Convert.ToDouble(absolutePositionTextBox.Text, CultureInfo.InvariantCulture);
+            double absolutePosition = Convert.ToDouble(absolutePositionNumericUpDown.Value, CultureInfo.InvariantCulture);
 
             labJackHandler.SetMoveAbsolutePosition(absolutePosition);
             labJackHandler.MoveAbsolute();
-
-            absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = true));
         }
     }
 }

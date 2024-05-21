@@ -12,25 +12,17 @@ namespace pwr_water_film_thickness_software.CalibrationCurve
         private double averageLabJackPosition;
         private double averageWaveLength;
 
-        public CalibrationCurveParameters GetCalibrationCurveParameters(List<SpectrumDataMatrixRow> calibrationSteps)
+        public CalibrationCurveSolver(List<CalibrationCurvePoint> _calibrationCurvePoints)
         {
-            GetCalibrationCurvePoints(calibrationSteps);
+            calibrationCurvePoints = _calibrationCurvePoints;
+        }
+
+        public CalibrationCurveParameters GetCalibrationCurveParameters()
+        {
             CalculateAverageValues();
             double aCoefficient = CalculateACoefficient();
             double bCoefficient = CalculateBCoefficient(aCoefficient);
-            Console.WriteLine($"A: {aCoefficient} B: {bCoefficient}");
             return new CalibrationCurveParameters(aCoefficient, bCoefficient);
-        }
-        private void GetCalibrationCurvePoints(List<SpectrumDataMatrixRow> calibrationSteps)
-        {
-            calibrationCurvePoints = new List<CalibrationCurvePoint>();
-
-            foreach(SpectrumDataMatrixRow calibrationStep in calibrationSteps)
-            {
-                SpectrumRow maxIntensivityRow = calibrationStep.SpectrumData.Find(t => t.SpectrumValues.Average() == calibrationStep.SpectrumData.Max(a => a.SpectrumValues.Average()));
-                calibrationCurvePoints.Add(new CalibrationCurvePoint(calibrationStep.LabJackPosition, maxIntensivityRow.WaveLength));
-                Console.WriteLine($"Position: {calibrationStep.LabJackPosition} Wavelength: {maxIntensivityRow.WaveLength}");
-            }
         }
         private void CalculateAverageValues()
         {
@@ -44,13 +36,13 @@ namespace pwr_water_film_thickness_software.CalibrationCurve
             foreach (var calibrationCurvePoint in calibrationCurvePoints)
             {
                 numeratorACoefficient += (calibrationCurvePoint.LabJackPosition - averageLabJackPosition) * (calibrationCurvePoint.WaveLength - averageWaveLength);
-                denominatorACoefficient += Math.Pow((calibrationCurvePoint.LabJackPosition - averageWaveLength), 2);
+                denominatorACoefficient += Math.Pow((calibrationCurvePoint.LabJackPosition - averageLabJackPosition), 2);
             }
-            return numeratorACoefficient / denominatorACoefficient;
+            return Math.Round(numeratorACoefficient / denominatorACoefficient, 3);
         }
         private double CalculateBCoefficient(double aCoefficient)
         {
-            return averageWaveLength - aCoefficient * averageLabJackPosition;
+            return Math.Round(averageWaveLength - aCoefficient * averageLabJackPosition, 3);
         }
     }
 }

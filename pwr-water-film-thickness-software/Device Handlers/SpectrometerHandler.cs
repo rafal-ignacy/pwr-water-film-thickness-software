@@ -21,7 +21,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             if (spectrometersAmount > 0) { isConnected = true; }
             return spectrometersAmount;
         }
-        public void SetIntegrationTime(int spectrometerIndex, int integrationTime)
+        public void SetIntegrationTime(int spectrometerIndex, Int32 integrationTime)
         {
             try
             {

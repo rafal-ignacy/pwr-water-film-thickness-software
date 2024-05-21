@@ -31,7 +31,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             get
             {
-                return Math.Round(0.19 * Convert.ToDouble(device.Position), 3);
+                return Math.Round(Convert.ToDouble(device.Position), 3);
             }
         }
         public int Connect(string _serialNumber, string _deviceCode, double _highLimit)
@@ -113,7 +113,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             try
             {
-                device.SetMoveAbsolutePosition(Convert.ToDecimal(position / 0.19));
+                device.SetMoveAbsolutePosition(Convert.ToDecimal(position));
             }
             catch (Exception e)
             {
@@ -122,7 +122,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         }
         public void MoveAbsolute()
         {
-            int waitTimeout = 30000;
+            int waitTimeout = 1200000;
             try
             {
                 device.MoveAbsolute(waitTimeout);

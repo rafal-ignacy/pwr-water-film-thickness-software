@@ -23,6 +23,10 @@ namespace pwr_water_film_thickness_software
                     {
                         labJackPositionBackgroundWorker.RunWorkerAsync();
                     }
+                    if (labJackPostitionHistoryBackgroundWorker.IsBusy != true)
+                    {
+                        labJackPostitionHistoryBackgroundWorker.RunWorkerAsync();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -33,7 +37,7 @@ namespace pwr_water_film_thickness_software
                 {
                     labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack connected"));
                     labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Disconnect"));
-                    absolutePositionTextBox.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = true));
+                    absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = true));
                     absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = true));
                 }
                 else
@@ -43,9 +47,9 @@ namespace pwr_water_film_thickness_software
 
                 if (spectrometerHandler.IsConnected)
                 {
-                    startPositionTextBox.BeginInvoke(new Action(() => startPositionTextBox.Enabled = true));
-                    endPositionTextBox.BeginInvoke(new Action(() => endPositionTextBox.Enabled = true));
-                    stepLengthTextBox.BeginInvoke(new Action(() => stepLengthTextBox.Enabled = true));
+                    startPositionNumericUpDown.BeginInvoke(new Action(() => startPositionNumericUpDown.Enabled = true));
+                    endPositionNumericUpDown.BeginInvoke(new Action(() => endPositionNumericUpDown.Enabled = true));
+                    stepLengthNumericUpDown.BeginInvoke(new Action(() => stepLengthNumericUpDown.Enabled = true));
                     createCalibrationCurveButton.BeginInvoke(new Action(() => createCalibrationCurveButton.Enabled = true));
                 }
             }
@@ -67,11 +71,11 @@ namespace pwr_water_film_thickness_software
                 }
                 labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack not connected"));
                 labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Connect"));
-                absolutePositionTextBox.BeginInvoke(new Action(() => absolutePositionTextBox.Enabled = false));
+                absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = false));
                 absolutePositionButton.BeginInvoke(new Action(() => absolutePositionButton.Enabled = false));
-                startPositionTextBox.BeginInvoke(new Action(() => startPositionTextBox.Enabled = false));
-                endPositionTextBox.BeginInvoke(new Action(() => endPositionTextBox.Enabled = false));
-                stepLengthTextBox.BeginInvoke(new Action(() => stepLengthTextBox.Enabled = false));
+                startPositionNumericUpDown.BeginInvoke(new Action(() => startPositionNumericUpDown.Enabled = false));
+                endPositionNumericUpDown.BeginInvoke(new Action(() => endPositionNumericUpDown.Enabled = false));
+                stepLengthNumericUpDown.BeginInvoke(new Action(() => stepLengthNumericUpDown.Enabled = false));
                 createCalibrationCurveButton.BeginInvoke(new Action(() => createCalibrationCurveButton.Enabled = false));
             }
         }

@@ -10,26 +10,26 @@ namespace pwr_water_film_thickness_software
     {
         private void LabJackConnected()
         {
-            absolutePositionTextBox.Enabled = true;
+            absolutePositionNumericUpDown.Enabled = true;
             absolutePositionButton.Enabled = true;
         }
         private void LabJackDisconnected()
         {
-            absolutePositionTextBox.Enabled = false;
+            absolutePositionNumericUpDown.Enabled = false;
             absolutePositionButton.Enabled = false;
         }
         private void LabJackSpectrometerConnected()
         {
-            startPositionTextBox.Enabled = true;
-            endPositionTextBox.Enabled = true;
-            stepLengthTextBox.Enabled = true;
+            startPositionNumericUpDown.Enabled = true;
+            endPositionNumericUpDown.Enabled = true;
+            stepLengthNumericUpDown.Enabled = true;
             createCalibrationCurveButton.Enabled = true;
         }
         private void LabJackSpectrometerDisconnected()
         {
-            startPositionTextBox.Enabled = false;
-            endPositionTextBox.Enabled = false;
-            stepLengthTextBox.Enabled = false;
+            startPositionNumericUpDown.Enabled = false;
+            endPositionNumericUpDown.Enabled = false;
+            stepLengthNumericUpDown.Enabled = false;
             createCalibrationCurveButton.Enabled = false;
         }
     }
