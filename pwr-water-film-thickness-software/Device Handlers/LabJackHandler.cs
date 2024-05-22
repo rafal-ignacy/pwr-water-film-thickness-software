@@ -13,8 +13,6 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         private string serialNumber;
         private string deviceCode;
         private bool isConnected;
-        private double lowLimit;
-        private double highLimit;
         public LabJackHandler()
         {
             SimulationManager.Instance.InitializeSimulations(); // simulation enabler
@@ -31,14 +29,12 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             get
             {
-                return Math.Round(Convert.ToDouble(device.Position), 3);
+                return Math.Round(0.19 * Convert.ToDouble(device.Position), 3);
             }
         }
-        public int Connect(string _serialNumber, string _deviceCode, double _highLimit)
+        public int Connect(string _serialNumber, string _deviceCode)
         {
             serialNumber = _serialNumber;
-            lowLimit = 0;
-            highLimit = _highLimit;
             deviceCode = _deviceCode;
             List<string> deviceList;
 
@@ -113,7 +109,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             try
             {
-                device.SetMoveAbsolutePosition(Convert.ToDecimal(position));
+                device.SetMoveAbsolutePosition(Convert.ToDecimal(position / 0.19));
             }
             catch (Exception e)
             {

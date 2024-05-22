@@ -16,16 +16,14 @@ namespace pwr_water_film_thickness_software
         //private string serialNumber = "46833131";
         private string serialNumber = "46000001";
         private string deviceCode = "L490MZ";
-        private int highLimit = 50;
 
-        private SpectrometerHandler spectrometerHandler = new SpectrometerHandler();
-        //private SpectrometerHandlerMock spectrometerHandler = new SpectrometerHandlerMock();
-
-        private LabJackHandler labJackHandler = new LabJackHandler();
-
-        private FileHandler fileHandler = new FileHandler();
+        private int averageSpectrumAmount = 1;
 
         private List<CalibrationCurvePoint> calibrationCurvePoints;
-        private int averageSpectrumAmount = 1;
+
+        //private SpectrometerHandler spectrometerHandler = new SpectrometerHandler();
+        private SpectrometerHandlerMock spectrometerHandler = new SpectrometerHandlerMock();
+        private LabJackHandler labJackHandler = new LabJackHandler();
+        private FileHandler fileHandler = new FileHandler();
     }
 }
