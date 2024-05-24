@@ -28,8 +28,14 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         public double Position
         {
             get
-            {
-                return Math.Round(0.19 * Convert.ToDouble(device.Position), 3);
+            {   if (this.serialNumber == "46000001")
+                {
+                    return Math.Round(0.19 * Convert.ToDouble(device.Position), 3);
+                }
+                else
+                {
+                    return Math.Round(Convert.ToDouble(device.Position), 3);
+                }
             }
         }
         public int Connect(string _serialNumber, string _deviceCode)
@@ -95,10 +101,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
             int waitTimeout = 900000;
             try
             {
-                if(device.NeedsHoming)
-                {
-                    device.Home(waitTimeout);
-                }  
+                device.Home(waitTimeout);
             }
             catch (Exception e)
             {
@@ -109,7 +112,14 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         {
             try
             {
-                device.SetMoveAbsolutePosition(Convert.ToDecimal(position / 0.19));
+                if (this.serialNumber == "46000001")
+                {
+                    device.SetMoveAbsolutePosition(Convert.ToDecimal(position / 0.19));
+                }
+                else
+                {
+                    device.SetMoveAbsolutePosition(Convert.ToDecimal(position));
+                }
             }
             catch (Exception e)
             {

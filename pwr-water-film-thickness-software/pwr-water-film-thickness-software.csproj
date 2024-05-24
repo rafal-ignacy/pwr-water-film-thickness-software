@@ -67,14 +67,11 @@
     <Compile Include="CalibrationCurve\CalibrationCurveSolver.cs" />
     <Compile Include="Data Models\CalibrationCurveParameters.cs" />
     <Compile Include="Data Models\CalibrationCurvePoint.cs" />
-    <Compile Include="Data Models\LabJackPositionHistoricalPoint.cs" />
+    <Compile Include="Data Models\ThicknessHistoricalPoint.cs" />
     <Compile Include="Data Models\SpectrumDataMatrixRow.cs" />
     <Compile Include="Data Models\SpectrumRow.cs" />
     <Compile Include="Device Handlers\LabJackHandler.cs" />
     <Compile Include="Device Handlers\SpectrometerHandler.cs" />
-    <Compile Include="Forms\BackgroundWorkers\LabJackPositionHistory.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Declarations\DataDeclarations.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,7 +90,9 @@
     <Compile Include="Forms\Sections\SpectrometerSection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Sections\ThicknessMeasurementSection.cs" />
+    <Compile Include="Forms\Sections\ThicknessMeasurementSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Interfaces\ISpectrometer.cs" />
     <Compile Include="Mocks\LabJackHandlerMock.cs" />
@@ -112,6 +111,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -126,6 +126,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Icons\true.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\false.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,5 +13,15 @@ namespace pwr_water_film_thickness_software
         {
             InitializeComponent();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            materialComboBox.SelectedIndex = 0;
+        }
+
+        private void tempButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

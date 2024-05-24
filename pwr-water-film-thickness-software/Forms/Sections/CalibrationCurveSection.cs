@@ -25,12 +25,22 @@ namespace pwr_water_film_thickness_software
             double endPosition = Convert.ToDouble(endPositionNumericUpDown.Value, CultureInfo.InvariantCulture);
             double stepLength = Convert.ToDouble(stepLengthNumericUpDown.Value, CultureInfo.InvariantCulture);
 
-            if(startPosition >= endPosition)
+            if (startPosition == endPosition)
+            {
+                MessageBox.Show("Start position equal to end position", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (startPosition > endPosition)
             {
                 MessageBox.Show("Start position is greater than end position", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else if (stepLength >= (endPosition - startPosition))
+            else if (stepLength == 0)
+            {
+                MessageBox.Show("Step length is equal to zero", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (stepLength > (endPosition - startPosition))
             {
                 MessageBox.Show("Step length is greater than distance between start and end position", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

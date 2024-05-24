@@ -33,10 +33,7 @@ namespace pwr_water_film_thickness_software
                     {
                         labJackPositionBackgroundWorker.RunWorkerAsync();
                     }
-                    if (labJackPostitionHistoryBackgroundWorker.IsBusy != true)
-                    {
-                        labJackPostitionHistoryBackgroundWorker.RunWorkerAsync();
-                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -47,11 +44,17 @@ namespace pwr_water_film_thickness_software
                 {
                     labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack connected"));
                     labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Disconnect"));
+                    labJackConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._true;
                     absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = true));
                     absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Value = Convert.ToDecimal(labJackHandler.Position)));
 
                     if (spectrometerHandler.IsConnected)
                     {
+                        if (!thicknessMeasurementBackgroundWorker.IsBusy)
+                        {
+                            thicknessMeasurementBackgroundWorker.RunWorkerAsync();
+                        }
+
                         startPositionNumericUpDown.BeginInvoke(new Action(() => startPositionNumericUpDown.Enabled = true));
                         endPositionNumericUpDown.BeginInvoke(new Action(() => endPositionNumericUpDown.Enabled = true));
                         stepLengthNumericUpDown.BeginInvoke(new Action(() => stepLengthNumericUpDown.Enabled = true));
@@ -75,9 +78,21 @@ namespace pwr_water_film_thickness_software
                     MessageBox.Show(ex.Message + " - cannot disconnect lab jack");
                     return;
                 }
+
+                if (thicknessMeasurementBackgroundWorker.WorkerSupportsCancellation)
+                {
+                    thicknessMeasurementBackgroundWorker.CancelAsync();
+                }
+
+                if (thicknessHistoryBackgroundWorker.WorkerSupportsCancellation)
+                {
+                    thicknessHistoryBackgroundWorker.CancelAsync();
+                }
+
                 labJackPositionLabel.BeginInvoke(new Action(() => labJackPositionLabel.Text = "Lab jack position: -"));
                 labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack not connected"));
                 labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Connect"));
+                labJackConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
                 absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = false));
                 startPositionNumericUpDown.BeginInvoke(new Action(() => startPositionNumericUpDown.Enabled = false));
                 endPositionNumericUpDown.BeginInvoke(new Action(() => endPositionNumericUpDown.Enabled = false));
@@ -99,11 +114,20 @@ namespace pwr_water_film_thickness_software
         }
         private void absolutePositionNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (!labJackMoveBackgroundWorker.IsBusy)
+            {
+                labJackMoveBackgroundWorker.RunWorkerAsync();
+            }
+        }
+
+        private void absolutePositionNumericUpDown_Enter(object sender, EventArgs e)
+        {
             if (labJackMoveBackgroundWorker.IsBusy != true)
             {
                 labJackMoveBackgroundWorker.RunWorkerAsync();
             }
         }
+
         private void labJackMoveBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             double absolutePosition = Convert.ToDouble(absolutePositionNumericUpDown.Value, CultureInfo.InvariantCulture);

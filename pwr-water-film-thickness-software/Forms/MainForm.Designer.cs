@@ -64,7 +64,7 @@
             this.saveCalibrationCurvePointsButton = new System.Windows.Forms.Button();
             this.labJackPositionHistoryChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.averageSpectrumTextBoxLabel = new System.Windows.Forms.Label();
-            this.labJackPostitionHistoryBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.thicknessHistoryBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.spectrumChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.saveSpectrumButton = new System.Windows.Forms.Button();
             this.absolutePositionNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -79,9 +79,14 @@
             this.materialThicknessLabel = new System.Windows.Forms.Label();
             this.thicknessMeasurementStatusLabel = new System.Windows.Forms.Label();
             this.materialListLabel = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.materialComboBox = new System.Windows.Forms.ComboBox();
             this.calibrationCurveLabel = new System.Windows.Forms.Label();
             this.labJackMoveBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.thicknessMeasurementBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.spectrometerConnectionPictureBox = new System.Windows.Forms.PictureBox();
+            this.labJackConnectionPictureBox = new System.Windows.Forms.PictureBox();
+            this.thicknessMeasurementStatusPictureBox = new System.Windows.Forms.PictureBox();
+            this.tempButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.calibrationCurveChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.labJackPositionHistoryChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spectrumChart)).BeginInit();
@@ -91,13 +96,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.startPositionNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.endPositionNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.stepLengthNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spectrometerConnectionPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.labJackConnectionPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thicknessMeasurementStatusPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // spectrometerConnectionLabel
             // 
             this.spectrometerConnectionLabel.AutoSize = true;
             this.spectrometerConnectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.spectrometerConnectionLabel.Location = new System.Drawing.Point(60, 180);
+            this.spectrometerConnectionLabel.Location = new System.Drawing.Point(110, 180);
             this.spectrometerConnectionLabel.Name = "spectrometerConnectionLabel";
             this.spectrometerConnectionLabel.Size = new System.Drawing.Size(431, 39);
             this.spectrometerConnectionLabel.TabIndex = 0;
@@ -117,7 +125,7 @@
             // 
             this.labJackConnectionLabel.AutoSize = true;
             this.labJackConnectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labJackConnectionLabel.Location = new System.Drawing.Point(1040, 180);
+            this.labJackConnectionLabel.Location = new System.Drawing.Point(1090, 180);
             this.labJackConnectionLabel.Name = "labJackConnectionLabel";
             this.labJackConnectionLabel.Size = new System.Drawing.Size(366, 39);
             this.labJackConnectionLabel.TabIndex = 2;
@@ -337,18 +345,18 @@
             // 
             // labJackPositionHistoryChart
             // 
-            chartArea2.AxisX.Interval = 1D;
+            chartArea2.AxisX.Interval = 5D;
             chartArea2.AxisX.IsLabelAutoFit = false;
             chartArea2.AxisX.LabelStyle.Angle = 90;
             chartArea2.AxisX.Maximum = 0D;
-            chartArea2.AxisX.Minimum = -10D;
+            chartArea2.AxisX.Minimum = -30D;
             chartArea2.AxisX.Title = "Time [s]";
             chartArea2.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea2.AxisY.LabelStyle.Format = "0.00";
+            chartArea2.AxisY.LabelStyle.Format = "0.000";
             chartArea2.AxisY.Maximum = 0D;
             chartArea2.AxisY.Minimum = 10D;
-            chartArea2.AxisY.Title = "Lab jack position [mm]";
+            chartArea2.AxisY.Title = "Thickness [mm]";
             chartArea2.Name = "ChartArea1";
             this.labJackPositionHistoryChart.ChartAreas.Add(chartArea2);
             this.labJackPositionHistoryChart.Location = new System.Drawing.Point(1040, 570);
@@ -362,7 +370,7 @@
             this.labJackPositionHistoryChart.TabIndex = 28;
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             title2.Name = "Title1";
-            title2.Text = "Lab jack position";
+            title2.Text = "Historical material thickness";
             this.labJackPositionHistoryChart.Titles.Add(title2);
             // 
             // averageSpectrumTextBoxLabel
@@ -375,10 +383,11 @@
             this.averageSpectrumTextBoxLabel.TabIndex = 29;
             this.averageSpectrumTextBoxLabel.Text = "Average spectrum amount";
             // 
-            // labJackPostitionHistoryBackgroundWorker
+            // thicknessHistoryBackgroundWorker
             // 
-            this.labJackPostitionHistoryBackgroundWorker.WorkerSupportsCancellation = true;
-            this.labJackPostitionHistoryBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.labJackPostitionHistoryBackgroundWorker_DoWork);
+            this.thicknessHistoryBackgroundWorker.WorkerSupportsCancellation = true;
+            this.thicknessHistoryBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.thicknessHistoryBackgroundWorker_DoWork);
+            this.thicknessHistoryBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.thicknessHistoryBackgroundWorker_RunWorkerCompleted);
             // 
             // spectrumChart
             // 
@@ -439,6 +448,7 @@
             this.absolutePositionNumericUpDown.Size = new System.Drawing.Size(143, 45);
             this.absolutePositionNumericUpDown.TabIndex = 37;
             this.absolutePositionNumericUpDown.ValueChanged += new System.EventHandler(this.absolutePositionNumericUpDown_ValueChanged);
+            this.absolutePositionNumericUpDown.Enter += new System.EventHandler(this.absolutePositionNumericUpDown_Enter);
             // 
             // integrationTimeNumericUpDown
             // 
@@ -604,7 +614,7 @@
             // 
             this.thicknessMeasurementStatusLabel.AutoSize = true;
             this.thicknessMeasurementStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.thicknessMeasurementStatusLabel.Location = new System.Drawing.Point(1040, 1290);
+            this.thicknessMeasurementStatusLabel.Location = new System.Drawing.Point(1090, 1290);
             this.thicknessMeasurementStatusLabel.Name = "thicknessMeasurementStatusLabel";
             this.thicknessMeasurementStatusLabel.Size = new System.Drawing.Size(541, 39);
             this.thicknessMeasurementStatusLabel.TabIndex = 49;
@@ -620,18 +630,21 @@
             this.materialListLabel.TabIndex = 50;
             this.materialListLabel.Text = "Material list";
             // 
-            // comboBox1
+            // materialComboBox
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "woda",
-            "izopropanol",
-            "szkło kwarcowe"});
-            this.comboBox1.Location = new System.Drawing.Point(1540, 1377);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(420, 46);
-            this.comboBox1.TabIndex = 51;
+            this.materialComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.materialComboBox.FormattingEnabled = true;
+            this.materialComboBox.Items.AddRange(new object[] {
+            "water",
+            "isopropanol",
+            "fused silica",
+            "N-BK7",
+            "S-LAH64"});
+            this.materialComboBox.Location = new System.Drawing.Point(1540, 1377);
+            this.materialComboBox.Name = "materialComboBox";
+            this.materialComboBox.Size = new System.Drawing.Size(420, 46);
+            this.materialComboBox.TabIndex = 51;
+            this.materialComboBox.SelectedIndexChanged += new System.EventHandler(this.materialComboBox_SelectedIndexChanged);
             // 
             // calibrationCurveLabel
             // 
@@ -645,15 +658,62 @@
             // 
             // labJackMoveBackgroundWorker
             // 
+            this.labJackMoveBackgroundWorker.WorkerSupportsCancellation = true;
             this.labJackMoveBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.labJackMoveBackgroundWorker_DoWork);
+            // 
+            // thicknessMeasurementBackgroundWorker
+            // 
+            this.thicknessMeasurementBackgroundWorker.WorkerSupportsCancellation = true;
+            this.thicknessMeasurementBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.thicknessMeasurementBackgroundWorker_DoWork);
+            // 
+            // spectrometerConnectionPictureBox
+            // 
+            this.spectrometerConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
+            this.spectrometerConnectionPictureBox.Location = new System.Drawing.Point(60, 183);
+            this.spectrometerConnectionPictureBox.Name = "spectrometerConnectionPictureBox";
+            this.spectrometerConnectionPictureBox.Size = new System.Drawing.Size(32, 32);
+            this.spectrometerConnectionPictureBox.TabIndex = 54;
+            this.spectrometerConnectionPictureBox.TabStop = false;
+            // 
+            // labJackConnectionPictureBox
+            // 
+            this.labJackConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
+            this.labJackConnectionPictureBox.Location = new System.Drawing.Point(1040, 183);
+            this.labJackConnectionPictureBox.Name = "labJackConnectionPictureBox";
+            this.labJackConnectionPictureBox.Size = new System.Drawing.Size(32, 32);
+            this.labJackConnectionPictureBox.TabIndex = 55;
+            this.labJackConnectionPictureBox.TabStop = false;
+            // 
+            // thicknessMeasurementStatusPictureBox
+            // 
+            this.thicknessMeasurementStatusPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
+            this.thicknessMeasurementStatusPictureBox.Location = new System.Drawing.Point(1040, 1293);
+            this.thicknessMeasurementStatusPictureBox.Name = "thicknessMeasurementStatusPictureBox";
+            this.thicknessMeasurementStatusPictureBox.Size = new System.Drawing.Size(32, 32);
+            this.thicknessMeasurementStatusPictureBox.TabIndex = 56;
+            this.thicknessMeasurementStatusPictureBox.TabStop = false;
+            // 
+            // tempButton
+            // 
+            this.tempButton.Location = new System.Drawing.Point(283, 1327);
+            this.tempButton.Name = "tempButton";
+            this.tempButton.Size = new System.Drawing.Size(504, 92);
+            this.tempButton.TabIndex = 57;
+            this.tempButton.Text = "Temporary";
+            this.tempButton.UseVisualStyleBackColor = true;
+            this.tempButton.Click += new System.EventHandler(this.tempButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2968, 1482);
+            this.ClientSize = new System.Drawing.Size(2998, 1482);
+            this.Controls.Add(this.tempButton);
+            this.Controls.Add(this.thicknessMeasurementStatusPictureBox);
+            this.Controls.Add(this.labJackConnectionPictureBox);
+            this.Controls.Add(this.spectrometerConnectionPictureBox);
             this.Controls.Add(this.calibrationCurveLabel);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.materialComboBox);
             this.Controls.Add(this.materialListLabel);
             this.Controls.Add(this.thicknessMeasurementStatusLabel);
             this.Controls.Add(this.materialThicknessLabel);
@@ -691,8 +751,11 @@
             this.Controls.Add(this.spectrometerConnectionButton);
             this.Controls.Add(this.spectrometerConnectionLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximumSize = new System.Drawing.Size(3030, 1570);
+            this.MinimumSize = new System.Drawing.Size(3030, 1570);
             this.Name = "MainForm";
             this.Text = "Transparent material thickness measurement";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.calibrationCurveChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.labJackPositionHistoryChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spectrumChart)).EndInit();
@@ -702,6 +765,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.startPositionNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.endPositionNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.stepLengthNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spectrometerConnectionPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.labJackConnectionPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.thicknessMeasurementStatusPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -735,7 +801,7 @@
         private System.Windows.Forms.Button saveCalibrationCurvePointsButton;
         private System.Windows.Forms.DataVisualization.Charting.Chart labJackPositionHistoryChart;
         private System.Windows.Forms.Label averageSpectrumTextBoxLabel;
-        private System.ComponentModel.BackgroundWorker labJackPostitionHistoryBackgroundWorker;
+        private System.ComponentModel.BackgroundWorker thicknessHistoryBackgroundWorker;
         private System.Windows.Forms.DataVisualization.Charting.Chart spectrumChart;
         private System.Windows.Forms.Button saveSpectrumButton;
         private System.Windows.Forms.NumericUpDown absolutePositionNumericUpDown;
@@ -750,9 +816,14 @@
         private System.Windows.Forms.Label materialThicknessLabel;
         private System.Windows.Forms.Label thicknessMeasurementStatusLabel;
         private System.Windows.Forms.Label materialListLabel;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox materialComboBox;
         private System.Windows.Forms.Label calibrationCurveLabel;
         private System.ComponentModel.BackgroundWorker labJackMoveBackgroundWorker;
+        private System.ComponentModel.BackgroundWorker thicknessMeasurementBackgroundWorker;
+        private System.Windows.Forms.PictureBox spectrometerConnectionPictureBox;
+        private System.Windows.Forms.PictureBox labJackConnectionPictureBox;
+        private System.Windows.Forms.PictureBox thicknessMeasurementStatusPictureBox;
+        private System.Windows.Forms.Button tempButton;
     }
 }
 

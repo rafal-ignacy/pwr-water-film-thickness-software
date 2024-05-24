@@ -45,15 +45,18 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         }
         public double[] GetSpectrum(int spectrometerIndex)
         {
-            double[] spectrumArray;
-            try
+            double[] spectrumArray = { };
+            if (this.isConnected)
             {
-                spectrumArray = device.getSpectrum(spectrometerIndex);
-            }
-            catch
-            {
-                double[] emptyArray = { };
-                return emptyArray;
+                try
+                {
+                    spectrumArray = device.getSpectrum(spectrometerIndex);
+                }
+                catch
+                {
+                    double[] emptyArray = { };
+                    return emptyArray;
+                }
             }
             return spectrumArray;
         }

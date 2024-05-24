@@ -41,12 +41,18 @@ namespace pwr_water_film_thickness_software
 
                     spectrometerConnectionLabel.Text = "Spectrometer connected";
                     spectrometerConnectionButton.Text = "Disconnect";
+                    spectrometerConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._true;
                     integrationTimeNumericUpDown.Enabled = true;
                     averageSpectrumNumericUpDown.Enabled = true;
                     saveSpectrumButton.Enabled = true;
 
                     if(labJackHandler.IsConnected)
                     {
+                        if (thicknessMeasurementBackgroundWorker.IsBusy != true)
+                        {
+                            thicknessMeasurementBackgroundWorker.RunWorkerAsync();
+                        }
+
                         startPositionNumericUpDown.Enabled = true;
                         endPositionNumericUpDown.Enabled = true;
                         stepLengthNumericUpDown.Enabled = true;
@@ -70,13 +76,19 @@ namespace pwr_water_film_thickness_software
                     return;
                 }
 
-                if (spectrumMeasurementBackgroundWorker.WorkerSupportsCancellation == true)
+                if (spectrumMeasurementBackgroundWorker.WorkerSupportsCancellation)
                 {
                     spectrumMeasurementBackgroundWorker.CancelAsync();
                 }
 
+                if (thicknessHistoryBackgroundWorker.WorkerSupportsCancellation)
+                {
+                    thicknessHistoryBackgroundWorker.CancelAsync();
+                }
+
                 spectrometerConnectionLabel.Text = "Spectrometer not connected";
                 spectrometerConnectionButton.Text = "Connect";
+                spectrometerConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
                 integrationTimeNumericUpDown.Enabled = false;
                 averageSpectrumNumericUpDown.Enabled = false;
                 saveSpectrumButton.Enabled = false;
