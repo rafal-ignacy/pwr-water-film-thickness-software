@@ -28,16 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title3 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title6 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.spectrometerConnectionLabel = new System.Windows.Forms.Label();
             this.spectrometerConnectionButton = new System.Windows.Forms.Button();
             this.labJackConnectionLabel = new System.Windows.Forms.Label();
@@ -86,7 +88,6 @@
             this.spectrometerConnectionPictureBox = new System.Windows.Forms.PictureBox();
             this.labJackConnectionPictureBox = new System.Windows.Forms.PictureBox();
             this.thicknessMeasurementStatusPictureBox = new System.Windows.Forms.PictureBox();
-            this.tempButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.calibrationCurveChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.labJackPositionHistoryChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spectrumChart)).BeginInit();
@@ -305,32 +306,32 @@
             // 
             // calibrationCurveChart
             // 
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Angle = 90;
-            chartArea1.AxisX.Title = "Absolute position [mm]";
-            chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
+            chartArea4.AxisX.IsLabelAutoFit = false;
+            chartArea4.AxisX.LabelStyle.Angle = 90;
+            chartArea4.AxisX.Title = "Absolute position [mm]";
+            chartArea4.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea1.AxisY.Title = "Wavelength [nm]";
-            chartArea1.Name = "ChartArea1";
-            this.calibrationCurveChart.ChartAreas.Add(chartArea1);
+            chartArea4.AxisY.Title = "Wavelength [nm]";
+            chartArea4.Name = "ChartArea1";
+            this.calibrationCurveChart.ChartAreas.Add(chartArea4);
             this.calibrationCurveChart.Location = new System.Drawing.Point(2020, 170);
             this.calibrationCurveChart.Name = "calibrationCurveChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Name = "Calibration curve points";
-            series2.BorderWidth = 2;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Color = System.Drawing.Color.Brown;
-            series2.Name = "Regression line";
-            this.calibrationCurveChart.Series.Add(series1);
-            this.calibrationCurveChart.Series.Add(series2);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
+            series7.Name = "Calibration curve points";
+            series8.BorderWidth = 2;
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series8.Color = System.Drawing.Color.Brown;
+            series8.Name = "Regression line";
+            this.calibrationCurveChart.Series.Add(series7);
+            this.calibrationCurveChart.Series.Add(series8);
             this.calibrationCurveChart.Size = new System.Drawing.Size(920, 580);
             this.calibrationCurveChart.TabIndex = 26;
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            title1.Name = "Title1";
-            title1.Text = "Calibration curve";
-            this.calibrationCurveChart.Titles.Add(title1);
+            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            title4.Name = "Title1";
+            title4.Text = "Calibration curve";
+            this.calibrationCurveChart.Titles.Add(title4);
             // 
             // saveCalibrationCurvePointsButton
             // 
@@ -345,33 +346,33 @@
             // 
             // labJackPositionHistoryChart
             // 
-            chartArea2.AxisX.Interval = 5D;
-            chartArea2.AxisX.IsLabelAutoFit = false;
-            chartArea2.AxisX.LabelStyle.Angle = 90;
-            chartArea2.AxisX.Maximum = 0D;
-            chartArea2.AxisX.Minimum = -30D;
-            chartArea2.AxisX.Title = "Time [s]";
-            chartArea2.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
+            chartArea5.AxisX.Interval = 5D;
+            chartArea5.AxisX.IsLabelAutoFit = false;
+            chartArea5.AxisX.LabelStyle.Angle = 90;
+            chartArea5.AxisX.Maximum = 0D;
+            chartArea5.AxisX.Minimum = -30D;
+            chartArea5.AxisX.Title = "Time [s]";
+            chartArea5.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea2.AxisY.LabelStyle.Format = "0.000";
-            chartArea2.AxisY.Maximum = 0D;
-            chartArea2.AxisY.Minimum = 10D;
-            chartArea2.AxisY.Title = "Thickness [mm]";
-            chartArea2.Name = "ChartArea1";
-            this.labJackPositionHistoryChart.ChartAreas.Add(chartArea2);
+            chartArea5.AxisY.LabelStyle.Format = "0.000";
+            chartArea5.AxisY.Maximum = 0D;
+            chartArea5.AxisY.Minimum = 10D;
+            chartArea5.AxisY.Title = "Thickness [mm]";
+            chartArea5.Name = "ChartArea1";
+            this.labJackPositionHistoryChart.ChartAreas.Add(chartArea5);
             this.labJackPositionHistoryChart.Location = new System.Drawing.Point(1040, 570);
             this.labJackPositionHistoryChart.Name = "labJackPositionHistoryChart";
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Name = "Lab jack position";
-            this.labJackPositionHistoryChart.Series.Add(series3);
+            series9.BorderWidth = 3;
+            series9.ChartArea = "ChartArea1";
+            series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series9.Name = "Lab jack position";
+            this.labJackPositionHistoryChart.Series.Add(series9);
             this.labJackPositionHistoryChart.Size = new System.Drawing.Size(920, 580);
             this.labJackPositionHistoryChart.TabIndex = 28;
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            title2.Name = "Title1";
-            title2.Text = "Historical material thickness";
-            this.labJackPositionHistoryChart.Titles.Add(title2);
+            title5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            title5.Name = "Title1";
+            title5.Text = "Historical material thickness";
+            this.labJackPositionHistoryChart.Titles.Add(title5);
             // 
             // averageSpectrumTextBoxLabel
             // 
@@ -391,30 +392,40 @@
             // 
             // spectrumChart
             // 
-            chartArea3.AxisX.Interval = 100D;
-            chartArea3.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea3.AxisX.IntervalOffset = 4.69026828777D;
-            chartArea3.AxisX.IsLabelAutoFit = false;
-            chartArea3.AxisX.LabelStyle.Angle = 90;
-            chartArea3.AxisX.Title = "Wavelength [nm]";
-            chartArea3.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
+            chartArea6.AxisX.Interval = 100D;
+            chartArea6.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea6.AxisX.IntervalOffset = 4.69026828777D;
+            chartArea6.AxisX.IsLabelAutoFit = false;
+            chartArea6.AxisX.LabelStyle.Angle = 90;
+            chartArea6.AxisX.Title = "Wavelength [nm]";
+            chartArea6.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30) 
             | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
-            chartArea3.AxisY.Maximum = 16384D;
-            chartArea3.AxisY.Title = "Intensivity";
-            chartArea3.Name = "ChartArea1";
-            this.spectrumChart.ChartAreas.Add(chartArea3);
+            chartArea6.AxisY.LabelStyle.Format = "0";
+            chartArea6.AxisY.Maximum = 16384D;
+            chartArea6.AxisY.Title = "Intensivity";
+            chartArea6.Name = "ChartArea1";
+            this.spectrumChart.ChartAreas.Add(chartArea6);
             this.spectrumChart.Location = new System.Drawing.Point(60, 280);
             this.spectrumChart.Name = "spectrumChart";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Name = "Spectrum";
-            this.spectrumChart.Series.Add(series4);
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series10.Name = "Spectrum";
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series11.Name = "CurveFit";
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series12.Color = System.Drawing.Color.Fuchsia;
+            series12.Name = "CurveFit2";
+            this.spectrumChart.Series.Add(series10);
+            this.spectrumChart.Series.Add(series11);
+            this.spectrumChart.Series.Add(series12);
             this.spectrumChart.Size = new System.Drawing.Size(920, 580);
             this.spectrumChart.TabIndex = 17;
-            title3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            title3.Name = "Spectrum live view";
-            title3.Text = "Spectrum live view";
-            this.spectrumChart.Titles.Add(title3);
+            title6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.900001F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            title6.Name = "Spectrum live view";
+            title6.Text = "Spectrum live view";
+            this.spectrumChart.Titles.Add(title6);
             // 
             // saveSpectrumButton
             // 
@@ -693,22 +704,11 @@
             this.thicknessMeasurementStatusPictureBox.TabIndex = 56;
             this.thicknessMeasurementStatusPictureBox.TabStop = false;
             // 
-            // tempButton
-            // 
-            this.tempButton.Location = new System.Drawing.Point(283, 1327);
-            this.tempButton.Name = "tempButton";
-            this.tempButton.Size = new System.Drawing.Size(504, 92);
-            this.tempButton.TabIndex = 57;
-            this.tempButton.Text = "Temporary";
-            this.tempButton.UseVisualStyleBackColor = true;
-            this.tempButton.Click += new System.EventHandler(this.tempButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2998, 1482);
-            this.Controls.Add(this.tempButton);
             this.Controls.Add(this.thicknessMeasurementStatusPictureBox);
             this.Controls.Add(this.labJackConnectionPictureBox);
             this.Controls.Add(this.spectrometerConnectionPictureBox);
@@ -823,7 +823,6 @@
         private System.Windows.Forms.PictureBox spectrometerConnectionPictureBox;
         private System.Windows.Forms.PictureBox labJackConnectionPictureBox;
         private System.Windows.Forms.PictureBox thicknessMeasurementStatusPictureBox;
-        private System.Windows.Forms.Button tempButton;
     }
 }
 

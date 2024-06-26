@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using pwr_water_film_thickness_software.Data_Models;
+﻿using System.Collections.Generic;
 using pwr_water_film_thickness_software.DataModels;
 
 namespace pwr_water_film_thickness_software.Data_Models

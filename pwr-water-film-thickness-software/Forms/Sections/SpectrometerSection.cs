@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace pwr_water_film_thickness_software
@@ -41,7 +39,7 @@ namespace pwr_water_film_thickness_software
 
                     spectrometerConnectionLabel.Text = "Spectrometer connected";
                     spectrometerConnectionButton.Text = "Disconnect";
-                    spectrometerConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._true;
+                    spectrometerConnectionPictureBox.Image = Properties.Resources._true;
                     integrationTimeNumericUpDown.Enabled = true;
                     averageSpectrumNumericUpDown.Enabled = true;
                     saveSpectrumButton.Enabled = true;
@@ -98,7 +96,6 @@ namespace pwr_water_film_thickness_software
                 createCalibrationCurveButton.Enabled = false;
             }
         }
-
         private void SpectrumMeasurementBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -127,9 +124,10 @@ namespace pwr_water_film_thickness_software
         private void SpectrumMeasurementBackgroundWorker_WorkDone(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             spectrumChart.Series[0].Points.Clear();
+            spectrumChart.Series[1].Points.Clear();
+            spectrumChart.Series[2].Points.Clear();
             maxIntensivityWaveLengthLabel.Text = "Maximum intensivity: - for wavelength: -";
         }
-
         private void integrationTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             Int32 integrationTime = Convert.ToInt32(integrationTimeNumericUpDown.Value);
@@ -160,6 +158,5 @@ namespace pwr_water_film_thickness_software
                 }
             }
         }
-
     }
 }

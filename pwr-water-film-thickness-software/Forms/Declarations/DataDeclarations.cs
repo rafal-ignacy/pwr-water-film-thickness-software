@@ -16,7 +16,7 @@ namespace pwr_water_film_thickness_software
         private string serialNumber = "46833131";
         //private string serialNumber = "46000001";
         private string deviceCode = "L490MZ";
-
+        //private string spectrumFileName = "";
         //thickness measurement parameters
         private double h0 = 24.7023;
         private double k = 0.002189333;

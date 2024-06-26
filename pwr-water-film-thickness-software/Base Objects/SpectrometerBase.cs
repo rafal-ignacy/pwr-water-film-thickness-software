@@ -30,7 +30,7 @@ namespace pwr_water_film_thickness_software.BaseObjects
             for(int i = 0; i < measurementAmount - 1; i++)
             {
                 spectrum = GetSpectrum(0);
-                Thread.Sleep(50); // to delete when real device connected
+                Thread.Sleep(50);
                 for (int j = 0; j < spectrum.Length; j++)
                 {
                     spectrumData[j].SpectrumValues.Add(spectrum[j]);

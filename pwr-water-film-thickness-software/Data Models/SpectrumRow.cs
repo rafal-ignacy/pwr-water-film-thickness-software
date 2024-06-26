@@ -2,7 +2,7 @@
 
 namespace pwr_water_film_thickness_software.DataModels
 {
-    internal class SpectrumRow
+    public class SpectrumRow
     {
         public double WaveLength { get; set; }
         public List<double> SpectrumValues { get; set; }

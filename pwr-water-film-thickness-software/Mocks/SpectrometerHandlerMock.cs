@@ -20,7 +20,8 @@ namespace pwr_water_film_thickness_software.Mocks
         }
         private void GetSpectrumBase()
         {
-            string filePath = "files/sample-spectrum.csv";
+            string fileName = "it-15000-30.500-2";
+            string filePath = $"files/{fileName}.csv";
             try
             {
                 using (StreamReader reader = new StreamReader(filePath))
@@ -66,11 +67,9 @@ namespace pwr_water_film_thickness_software.Mocks
         public double[] GetSpectrum(int spectrometerIndex)
         {
             double[] spectrum = new double[spectrumBase.Length];
-            var rand = new Random();
-
             for (int i = 0; i < spectrum.Length; i++)
             {
-                spectrum[i] = spectrumBase[i] + rand.Next(-50, 50);
+                spectrum[i] = spectrumBase[i];
             }
             return spectrum;
         }

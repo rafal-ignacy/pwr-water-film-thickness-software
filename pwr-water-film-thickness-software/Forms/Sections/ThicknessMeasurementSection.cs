@@ -3,13 +3,8 @@ using pwr_water_film_thickness_software.DataModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace pwr_water_film_thickness_software
 { 
@@ -19,88 +14,27 @@ namespace pwr_water_film_thickness_software
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            ///////////////////////
-            ///
-
-            string filePath = "spektrum-peak.csv";
-            //List<SpectrumRow> spectrumData = new List<SpectrumRow>();
-
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-                    string[] columns = line.Split(';');
-                    if (columns.Length > 1)
-                    {
-                        //spectrumData.Add(new SpectrumRow(Convert.ToDouble(columns[0]), Convert.ToDouble(columns[1])));
-                    }
-                }
-            }
-
-            ///
-            //////////////////////
-
             while (worker.CancellationPending != true && spectrometerHandler.IsConnected && labJackHandler.IsConnected)
             {
                 List<SpectrumRow> spectrumData = spectrometerHandler.GetSpectrumData(averageSpectrumAmount, spectrometerHandler.GetSpectrum, spectrometerHandler.GetWaveLength);
-                var rand = new Random();
 
-                List<double> averageSpectrumOutput = new List<double>();
-                int windowWidth = 10;
-                List<double> averageWindow = new List<double>(new double[windowWidth]);
-                foreach (SpectrumRow row in spectrumData)
-                {
-                    averageWindow.Add(row.SpectrumValues.Average());
-                    //averageWindow.Add(row.SpectrumValues.Average() + rand.Next(-50, 50));
-                    averageWindow.RemoveAt(0);
-                    averageSpectrumOutput.Add(averageWindow.Average());
-                }
+                // moving average filter
+                //int[] waveLengthIndexes = MAF_WaveLengthIndexDetection(spectrumData);
 
-                int peakWindowSize = 100;
+                // fitting algorithms
+                int[] waveLengthIndexes = FittingAlgorithm_WaveLengthIndexDetection(spectrumData);
 
-                List<double> peaks = new List<double>();
-                double current;
-                IEnumerable<double> range;
-
-                int peakWindowSizeHalf = peakWindowSize / 2;
-                for (int i = 0; i < averageSpectrumOutput.Count; i++)
-                {
-                    current = averageSpectrumOutput[i];
-                    range = averageSpectrumOutput;
-
-                    if (i > peakWindowSizeHalf)
-                    {
-                        range = range.Skip(i - peakWindowSizeHalf);
-                    }
-
-                    range = range.Take(peakWindowSize);
-                    if ((range.Count() > 0) && (current == range.Max()))
-                    {
-                        peaks.Add(current);
-                    }
-                }
-
-                peaks.Sort();
-                peaks.Reverse();
-                if(peaks.Count < 2)
-                {
-                    continue;
-                }
-                int firstPeakIndex = averageSpectrumOutput.FindIndex(u => u == peaks[0]);
-                int secondPeakIndex = averageSpectrumOutput.FindIndex(u => u == peaks[1]);
-
-                double lambda1 = spectrumData[firstPeakIndex].WaveLength;
-                double lambda2 = spectrumData[secondPeakIndex].WaveLength;
+                double lambda1 = spectrumData[waveLengthIndexes[0]].WaveLength;
+                double lambda2 = spectrumData[waveLengthIndexes[1]].WaveLength;
 
                 double intensivityThreshold = 1200;
 
-                if (spectrumData[firstPeakIndex].SpectrumValues.Average() > intensivityThreshold && spectrumData[secondPeakIndex].SpectrumValues.Average() > intensivityThreshold)
+                if (spectrumData[waveLengthIndexes[0]].SpectrumValues.Average() > intensivityThreshold && spectrumData[waveLengthIndexes[1]].SpectrumValues.Average() > intensivityThreshold)
                 {
                     thickness = Math.Abs((r * k * (lambda2 - lambda1)) / ((h0 + k * (lambda2 - lambda1)) * Math.Tan(Math.Asin((n * Math.Sin(Math.Atan(r / (h0 + k * (lambda2 - lambda1))))) / n1))));
                     materialThicknessLabel.BeginInvoke(new Action(() => materialThicknessLabel.Text = $"Material thickness: {Math.Round(thickness, 5)} mm"));
                     thicknessMeasurementStatusLabel.BeginInvoke(new Action(() => thicknessMeasurementStatusLabel.Text = $"Thickness measurement active"));
-                    thicknessMeasurementStatusPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._true;
+                    thicknessMeasurementStatusPictureBox.Image = Properties.Resources._true;
                     if (thicknessHistoryBackgroundWorker.IsBusy != true)
                     {
                         thicknessHistoryBackgroundWorker.RunWorkerAsync();
@@ -111,7 +45,7 @@ namespace pwr_water_film_thickness_software
                     thickness = 0;
                     materialThicknessLabel.BeginInvoke(new Action(() => materialThicknessLabel.Text = $"Material thickness: -"));
                     thicknessMeasurementStatusLabel.BeginInvoke(new Action(() => thicknessMeasurementStatusLabel.Text = $"Thickness measurement not active"));
-                    thicknessMeasurementStatusPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
+                    thicknessMeasurementStatusPictureBox.Image = Properties.Resources._false;
                     if (thicknessHistoryBackgroundWorker.WorkerSupportsCancellation)
                     {
                         thicknessHistoryBackgroundWorker.CancelAsync();
@@ -145,8 +79,10 @@ namespace pwr_water_film_thickness_software
                 }
 
                 labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.Series[0].Points.Clear()));
+
                 ThicknessHistoricalPoint minPositionPoint = thicknessMeasurements.Find(t => t.Thickness == thicknessMeasurements.Min(a => a.Thickness));
                 ThicknessHistoricalPoint maxPositionPoint = thicknessMeasurements.Find(t => t.Thickness == thicknessMeasurements.Max(a => a.Thickness));
+
                 labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.ChartAreas[0].Axes[1].Minimum = minPositionPoint.Thickness - 0.005));
                 labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.ChartAreas[0].Axes[1].Maximum = maxPositionPoint.Thickness + 0.005));
 
@@ -154,6 +90,7 @@ namespace pwr_water_film_thickness_software
                 {
                     labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.Series[0].Points.AddXY(point.Time, point.Thickness)));
                 }
+
                 this.BeginInvoke(new Action(() => labJackPositionHistoryChart.Update()));
                 Thread.Sleep(1000);
             }
@@ -163,9 +100,9 @@ namespace pwr_water_film_thickness_software
         {
             materialThicknessLabel.BeginInvoke(new Action(() => materialThicknessLabel.Text = $"Material thickness: -"));
             thicknessMeasurementStatusLabel.BeginInvoke(new Action(() => thicknessMeasurementStatusLabel.Text = $"Thickness measurement not active"));
-            thicknessMeasurementStatusPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
-            thicknessMeasurements.Clear();
             labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.Series[0].Points.Clear()));
+            thicknessMeasurementStatusPictureBox.Image = Properties.Resources._false;           
+            thicknessMeasurements.Clear();
         }
         private void materialComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -191,6 +128,150 @@ namespace pwr_water_film_thickness_software
             Thread.Sleep(250);
             labJackPositionHistoryChart.BeginInvoke(new Action(() => labJackPositionHistoryChart.Series[0].Points.Clear()));
             thicknessMeasurements.Clear();
+        }
+        private List<double> MovingAverageFilter(List<SpectrumRow> spectrumData)
+        {
+            List<double> averageSpectrumSignal = new List<double>();
+            int windowWidth = 10;
+            List<double> averageWindow = new List<double>(new double[windowWidth]);
+            foreach (SpectrumRow row in spectrumData)
+            {
+                averageWindow.Add(row.SpectrumValues.Average());
+                averageWindow.RemoveAt(0);
+                averageSpectrumSignal.Add(averageWindow.Average());
+            }
+            return averageSpectrumSignal;
+        }
+        private int[] PeaksIndexDetection(List<double> averageSpectrumSignal)
+        {
+            int peakWindowSize = 100;
+
+            List<double> peaks = new List<double>();
+            double current;
+            IEnumerable<double> range;
+
+            int peakWindowSizeHalf = peakWindowSize / 2;
+            for (int i = 0; i < averageSpectrumSignal.Count; i++)
+            {
+                current = averageSpectrumSignal[i];
+                range = averageSpectrumSignal;
+
+                if (i > peakWindowSizeHalf)
+                {
+                    range = range.Skip(i - peakWindowSizeHalf);
+                }
+
+                range = range.Take(peakWindowSize);
+                if ((range.Count() > 0) && (current == range.Max()))
+                {
+                    peaks.Add(current);
+                }
+            }
+
+            peaks.Sort();
+            peaks.Reverse();
+
+            int[] indexes = new int[2];
+            indexes[0] = averageSpectrumSignal.FindIndex(u => u == peaks[0]);
+            indexes[1] = averageSpectrumSignal.FindIndex(u => u == peaks[1]);
+            return indexes;
+        }
+        private int[] MAF_WaveLengthIndexDetection(List<SpectrumRow> spectrumData)
+        {
+            List<double> averageSpectrumSingal = MovingAverageFilter(spectrumData);
+
+            int[] waveLengthIndexes = PeaksIndexDetection(averageSpectrumSingal);
+
+            return waveLengthIndexes;
+        }
+        private int[] FittingAlgorithm_WaveLengthIndexDetection(List<SpectrumRow> spectrumData)
+        {
+            int[] waveLengthIndexes = new int[2];
+            spectrumData = SpectrumSignalRangeCut(spectrumData);
+            int splitIndex = SplitSpectrumSignalIndex(spectrumData);
+            List<SpectrumRow> spectrumDataFirstPeak = spectrumData.GetRange(0, splitIndex);
+            List<SpectrumRow> spectrumDataSecondPeak = spectrumData.GetRange(splitIndex + 1, (spectrumData.Count - splitIndex - 1));
+
+            SpectrumDataProcessing spectrumDataProcessing = new SpectrumDataProcessing(spectrumDataFirstPeak);
+            double[][] curve = FittingProcedure(spectrumDataFirstPeak, spectrumDataProcessing);
+            int tempWaveLengthIndex1 = FindIndexMaxValue(curve);
+            AddFittedCurvesChart(curve, 1);
+            waveLengthIndexes[0] = FindIndexSpectrumData(spectrumData, curve[0][tempWaveLengthIndex1]);
+
+            SpectrumDataProcessing spectrumDataProcessing2 = new SpectrumDataProcessing(spectrumDataSecondPeak);
+            curve = FittingProcedure(spectrumDataSecondPeak, spectrumDataProcessing2);
+            int tempWaveLengthIndex2 = FindIndexMaxValue(curve);
+            AddFittedCurvesChart(curve, 2);
+            waveLengthIndexes[1] = FindIndexSpectrumData(spectrumData, curve[0][tempWaveLengthIndex2]);
+
+            return waveLengthIndexes;
+        }
+        private List<SpectrumRow> SpectrumSignalRangeCut(List<SpectrumRow> spectrumData) 
+        {
+            int index = spectrumData.FindIndex(x => x.SpectrumValues.Average() > 850);
+            spectrumData.RemoveRange(0, index);
+            spectrumData.Reverse();
+            index = spectrumData.FindIndex(x => x.SpectrumValues.Average() > 850);
+            spectrumData.RemoveRange(0, index);
+            spectrumData.Reverse();
+
+            return spectrumData;
+        }
+        private int SplitSpectrumSignalIndex(List<SpectrumRow> spectrumData)
+        {
+            SpectrumDataProcessing dataModelProcess = new SpectrumDataProcessing(spectrumData);
+            int indexSplit = dataModelProcess.FindLocalMinima();
+            return indexSplit;
+        }
+        private double[][] FittingProcedure(List<SpectrumRow> spectrumDataRange, SpectrumDataProcessing dataModelProcess)
+        {
+            dataModelProcess.FilterData();
+            double[][] points = dataModelProcess.getPoints(spectrumDataRange[0].WaveLength, spectrumDataRange[spectrumDataRange.Count - 1].WaveLength, 300);
+            return points;
+        }
+        private void AddFittedCurvesChart(double[][] curvePoints, int serieIndex)
+        {
+            List<FittingCurvePoint> curvePointsList = new List<FittingCurvePoint>();
+            int i = 0;
+            foreach (var element in curvePoints[0])
+            {
+                curvePointsList.Add(new FittingCurvePoint(curvePoints[1][i], element));
+                i++;
+            }
+
+            spectrumChart.BeginInvoke(new Action(() => spectrumChart.Series[serieIndex].Points.Clear()));
+            foreach (FittingCurvePoint point in curvePointsList)
+            {
+                spectrumChart.BeginInvoke(new Action(() => spectrumChart.Series[serieIndex].Points.AddXY(point.X, point.Y)));
+            }
+            spectrumChart.BeginInvoke(new Action(() => spectrumChart.ChartAreas[0].AxisX.LabelStyle.Format = "0"));
+        }
+        private int FindIndexMaxValue(double[][] curvePoints)
+        {
+            double maxValue = 0;
+            int maxValueIndex = 0;
+            for (int i = 0; i < curvePoints[0].Length; i++)
+            {
+                if (curvePoints[1][i] > maxValue)
+                {
+                    maxValue = curvePoints[1][i];
+                    maxValueIndex = i;
+                }
+            }
+            return maxValueIndex;
+        }
+        private int FindIndexSpectrumData(List<SpectrumRow> spectrumData, double threshold)
+        {
+            int index = 0;
+            foreach(SpectrumRow row in spectrumData)
+            {
+                if(row.WaveLength > threshold)
+                {
+                    break;
+                }
+                index++;
+            }
+            return index;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace pwr_water_film_thickness_software.DeviceHandlers
         private bool isConnected;
         public LabJackHandler()
         {
-            SimulationManager.Instance.InitializeSimulations(); // simulation enabler
+            SimulationManager.Instance.InitializeSimulations();
             isConnected = false;
         }
         public bool IsConnected

@@ -32,7 +32,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo-PWr-kolor-pion-bez-tla.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MPFitLib, Version=1.1.2.0, Culture=neutral, PublicKeyToken=be1b3c0b5819660a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MPFitLib.dll</HintPath>
+    </Reference>
     <Reference Include="NETOmniDriver-NET40, Version=2.45.0.0, Culture=neutral, PublicKeyToken=5ceb6b3940bb24a4, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\pwr-water-film-thickness\pwr-water-film-thickness\bin\Debug\NETOmniDriver-NET40.dll</HintPath>
@@ -65,8 +79,15 @@
   <ItemGroup>
     <Compile Include="Base Objects\SpectrometerBase.cs" />
     <Compile Include="CalibrationCurve\CalibrationCurveSolver.cs" />
+    <Compile Include="CurveFitting\DataVariable.cs" />
+    <Compile Include="CurveFitting\Models\FunctionBase.cs" />
+    <Compile Include="CurveFitting\Models\Gauss.cs" />
+    <Compile Include="CurveFitting\Models\LogNormal.cs" />
+    <Compile Include="CurveFitting\Models\Lorentzian.cs" />
+    <Compile Include="CurveFitting\SpectrumDataProcessing.cs" />
     <Compile Include="Data Models\CalibrationCurveParameters.cs" />
     <Compile Include="Data Models\CalibrationCurvePoint.cs" />
+    <Compile Include="Data Models\FittingCurvePoint.cs" />
     <Compile Include="Data Models\ThicknessHistoricalPoint.cs" />
     <Compile Include="Data Models\SpectrumDataMatrixRow.cs" />
     <Compile Include="Data Models\SpectrumRow.cs" />
@@ -95,7 +116,6 @@
     </Compile>
     <Compile Include="Interfaces\IConnection.cs" />
     <Compile Include="Interfaces\ISpectrometer.cs" />
-    <Compile Include="Mocks\LabJackHandlerMock.cs" />
     <Compile Include="Mocks\SpectrometerHandlerMock.cs" />
     <Compile Include="Others\FileHandler.cs" />
     <Compile Include="Program.cs" />
@@ -131,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\false.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo-PWr-kolor-pion-bez-tla.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

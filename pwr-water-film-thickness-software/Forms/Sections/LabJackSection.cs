@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace pwr_water_film_thickness_software
@@ -19,7 +15,7 @@ namespace pwr_water_film_thickness_software
                 labJackConnectionBackgroundWorker.RunWorkerAsync();
             }
         }
-        private void labJackConnectionBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void labJackConnectionBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             if (!labJackHandler.IsConnected)
             {
@@ -44,7 +40,7 @@ namespace pwr_water_film_thickness_software
                 {
                     labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack connected"));
                     labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Disconnect"));
-                    labJackConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._true;
+                    labJackConnectionPictureBox.Image = Properties.Resources._true;
                     absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = true));
                     absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Value = Convert.ToDecimal(labJackHandler.Position)));
 
@@ -92,7 +88,7 @@ namespace pwr_water_film_thickness_software
                 labJackPositionLabel.BeginInvoke(new Action(() => labJackPositionLabel.Text = "Lab jack position: -"));
                 labJackConnectionLabel.BeginInvoke(new Action(() => labJackConnectionLabel.Text = "Lab jack not connected"));
                 labJackConnectionButton.BeginInvoke(new Action(() => labJackConnectionButton.Text = "Connect"));
-                labJackConnectionPictureBox.Image = global::pwr_water_film_thickness_software.Properties.Resources._false;
+                labJackConnectionPictureBox.Image = Properties.Resources._false;
                 absolutePositionNumericUpDown.BeginInvoke(new Action(() => absolutePositionNumericUpDown.Enabled = false));
                 startPositionNumericUpDown.BeginInvoke(new Action(() => startPositionNumericUpDown.Enabled = false));
                 endPositionNumericUpDown.BeginInvoke(new Action(() => endPositionNumericUpDown.Enabled = false));
@@ -100,7 +96,6 @@ namespace pwr_water_film_thickness_software
                 createCalibrationCurveButton.BeginInvoke(new Action(() => createCalibrationCurveButton.Enabled = false));
             }
         }
-
         private void labJackBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -119,7 +114,6 @@ namespace pwr_water_film_thickness_software
                 labJackMoveBackgroundWorker.RunWorkerAsync();
             }
         }
-
         private void absolutePositionNumericUpDown_Enter(object sender, EventArgs e)
         {
             if (labJackMoveBackgroundWorker.IsBusy != true)
@@ -127,8 +121,7 @@ namespace pwr_water_film_thickness_software
                 labJackMoveBackgroundWorker.RunWorkerAsync();
             }
         }
-
-        private void labJackMoveBackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void labJackMoveBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             double absolutePosition = Convert.ToDouble(absolutePositionNumericUpDown.Value, CultureInfo.InvariantCulture);
             if (labJackHandler.IsConnected)
